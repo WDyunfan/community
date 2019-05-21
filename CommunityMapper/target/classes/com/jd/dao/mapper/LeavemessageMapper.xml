@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jd.dao.LeavemessageMapper" >
+  <resultMap id="BaseResultMap" type="com.jd.pojo.Leavemessage" >
+    <id column="leavemessage_id" property="leavemessageId" jdbcType="INTEGER" />
+    <result column="users_id" property="usersId" jdbcType="INTEGER" />
+    <result column="leavemessage_content" property="leavemessageContent" jdbcType="VARCHAR" />
+    <result column="leavemessage_time" property="leavemessageTime" jdbcType="TIMESTAMP" />
+    <result column="leavemessage_experience" property="leavemessageExperience" jdbcType="VARCHAR" />
+    <result column="leavemessage_like" property="leavemessageLike" jdbcType="INTEGER" />
+    <result column="leavemessage_descr" property="leavemessageDescr" jdbcType="VARCHAR" />
+    <association property="users" column="users_id" select="com.jd.dao.UsersMapper.selectByPrimaryKey"></association>
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    leavemessage_id, users_id, leavemessage_content, leavemessage_time, leavemessage_experience, 
+    leavemessage_like, leavemessage_descr
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.jd.pojo.LeavemessageExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from leavemessage
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from leavemessage
+    where leavemessage_id = #{leavemessageId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from leavemessage
+    where leavemessage_id = #{leavemessageId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.jd.pojo.LeavemessageExample" >
+    delete from leavemessage
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.jd.pojo.Leavemessage" >
+    insert into leavemessage (leavemessage_id, users_id, leavemessage_content, 
+      leavemessage_time, leavemessage_experience, 
+      leavemessage_like, leavemessage_descr)
+    values (#{leavemessageId,jdbcType=INTEGER}, #{usersId,jdbcType=INTEGER}, #{leavemessageContent,jdbcType=VARCHAR}, 
+      #{leavemessageTime,jdbcType=TIMESTAMP}, #{leavemessageExperience,jdbcType=VARCHAR}, 
+      #{leavemessageLike,jdbcType=INTEGER}, #{leavemessageDescr,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jd.pojo.Leavemessage" >
+    insert into leavemessage
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="leavemessageId != null" >
+        leavemessage_id,
+      </if>
+      <if test="usersId != null" >
+        users_id,
+      </if>
+      <if test="leavemessageContent != null" >
+        leavemessage_content,
+      </if>
+      <if test="leavemessageTime != null" >
+        leavemessage_time,
+      </if>
+      <if test="leavemessageExperience != null" >
+        leavemessage_experience,
+      </if>
+      <if test="leavemessageLike != null" >
+        leavemessage_like,
+      </if>
+      <if test="leavemessageDescr != null" >
+        leavemessage_descr,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="leavemessageId != null" >
+        #{leavemessageId,jdbcType=INTEGER},
+      </if>
+      <if test="usersId != null" >
+        #{usersId,jdbcType=INTEGER},
+      </if>
+      <if test="leavemessageContent != null" >
+        #{leavemessageContent,jdbcType=VARCHAR},
+      </if>
+      <if test="leavemessageTime != null" >
+        #{leavemessageTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="leavemessageExperience != null" >
+        #{leavemessageExperience,jdbcType=VARCHAR},
+      </if>
+      <if test="leavemessageLike != null" >
+        #{leavemessageLike,jdbcType=INTEGER},
+      </if>
+      <if test="leavemessageDescr != null" >
+        #{leavemessageDescr,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.jd.pojo.LeavemessageExample" resultType="java.lang.Integer" >
+    select count(*) from leavemessage
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update leavemessage
+    <set >
+      <if test="record.leavemessageId != null" >
+        leavemessage_id = #{record.leavemessageId,jdbcType=INTEGER},
+      </if>
+      <if test="record.usersId != null" >
+        users_id = #{record.usersId,jdbcType=INTEGER},
+      </if>
+      <if test="record.leavemessageContent != null" >
+        leavemessage_content = #{record.leavemessageContent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.leavemessageTime != null" >
+        leavemessage_time = #{record.leavemessageTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.leavemessageExperience != null" >
+        leavemessage_experience = #{record.leavemessageExperience,jdbcType=VARCHAR},
+      </if>
+      <if test="record.leavemessageLike != null" >
+        leavemessage_like = #{record.leavemessageLike,jdbcType=INTEGER},
+      </if>
+      <if test="record.leavemessageDescr != null" >
+        leavemessage_descr = #{record.leavemessageDescr,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update leavemessage
+    set leavemessage_id = #{record.leavemessageId,jdbcType=INTEGER},
+      users_id = #{record.usersId,jdbcType=INTEGER},
+      leavemessage_content = #{record.leavemessageContent,jdbcType=VARCHAR},
+      leavemessage_time = #{record.leavemessageTime,jdbcType=TIMESTAMP},
+      leavemessage_experience = #{record.leavemessageExperience,jdbcType=VARCHAR},
+      leavemessage_like = #{record.leavemessageLike,jdbcType=INTEGER},
+      leavemessage_descr = #{record.leavemessageDescr,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jd.pojo.Leavemessage" >
+    update leavemessage
+    <set >
+      <if test="usersId != null" >
+        users_id = #{usersId,jdbcType=INTEGER},
+      </if>
+      <if test="leavemessageContent != null" >
+        leavemessage_content = #{leavemessageContent,jdbcType=VARCHAR},
+      </if>
+      <if test="leavemessageTime != null" >
+        leavemessage_time = #{leavemessageTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="leavemessageExperience != null" >
+        leavemessage_experience = #{leavemessageExperience,jdbcType=VARCHAR},
+      </if>
+      <if test="leavemessageLike != null" >
+        leavemessage_like = #{leavemessageLike,jdbcType=INTEGER},
+      </if>
+      <if test="leavemessageDescr != null" >
+        leavemessage_descr = #{leavemessageDescr,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where leavemessage_id = #{leavemessageId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jd.pojo.Leavemessage" >
+    update leavemessage
+    set users_id = #{usersId,jdbcType=INTEGER},
+      leavemessage_content = #{leavemessageContent,jdbcType=VARCHAR},
+      leavemessage_time = #{leavemessageTime,jdbcType=TIMESTAMP},
+      leavemessage_experience = #{leavemessageExperience,jdbcType=VARCHAR},
+      leavemessage_like = #{leavemessageLike,jdbcType=INTEGER},
+      leavemessage_descr = #{leavemessageDescr,jdbcType=VARCHAR}
+    where leavemessage_id = #{leavemessageId,jdbcType=INTEGER}
+  </update>
+</mapper>

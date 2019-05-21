@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jd.dao.ForumMapper" >
+  <resultMap id="BaseResultMap" type="com.jd.pojo.Forum" >
+    <id column="forum_id" property="forumId" jdbcType="INTEGER" />
+    <result column="users_id" property="usersId" jdbcType="INTEGER" />
+    <result column="forum_time" property="forumTime" jdbcType="TIMESTAMP" />
+    <result column="forum_img" property="forumImg" jdbcType="VARCHAR" />
+    <result column="forum_content" property="forumContent" jdbcType="VARCHAR" />
+    <result column="forum_pageviews" property="forumPageviews" jdbcType="INTEGER" />
+    <result column="forum_commentvolume" property="forumCommentvolume" jdbcType="INTEGER" />
+    <result column="forum_type" property="forumType" jdbcType="VARCHAR" />
+    <result column="forum_descr" property="forumDescr" jdbcType="VARCHAR" />
+    <association column="users_id" property="users" select="com.jd.dao.UsersMapper.selectByPrimaryKey"></association>
+    <collection column="forum_id" property="forumresponses" select="com.jd.dao.ForumresponseMapper.selectByForumId" ofType="com.jd.pojo.Forumresponse"></collection>
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    forum_id, users_id, forum_time, forum_img, forum_content, forum_pageviews, forum_commentvolume, 
+    forum_type, forum_descr
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.jd.pojo.ForumExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from forum
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from forum
+    where forum_id = #{forumId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from forum
+    where forum_id = #{forumId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.jd.pojo.ForumExample" >
+    delete from forum
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.jd.pojo.Forum" >
+    insert into forum (forum_id, users_id, forum_time, 
+      forum_img, forum_content, forum_pageviews, 
+      forum_commentvolume, forum_type, forum_descr
+      )
+    values (#{forumId,jdbcType=INTEGER}, #{usersId,jdbcType=INTEGER}, #{forumTime,jdbcType=TIMESTAMP}, 
+      #{forumImg,jdbcType=VARCHAR}, #{forumContent,jdbcType=VARCHAR}, #{forumPageviews,jdbcType=INTEGER}, 
+      #{forumCommentvolume,jdbcType=INTEGER}, #{forumType,jdbcType=VARCHAR}, #{forumDescr,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.jd.pojo.Forum" >
+    insert into forum
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="forumId != null" >
+        forum_id,
+      </if>
+      <if test="usersId != null" >
+        users_id,
+      </if>
+      <if test="forumTime != null" >
+        forum_time,
+      </if>
+      <if test="forumImg != null" >
+        forum_img,
+      </if>
+      <if test="forumContent != null" >
+        forum_content,
+      </if>
+      <if test="forumPageviews != null" >
+        forum_pageviews,
+      </if>
+      <if test="forumCommentvolume != null" >
+        forum_commentvolume,
+      </if>
+      <if test="forumType != null" >
+        forum_type,
+      </if>
+      <if test="forumDescr != null" >
+        forum_descr,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="forumId != null" >
+        #{forumId,jdbcType=INTEGER},
+      </if>
+      <if test="usersId != null" >
+        #{usersId,jdbcType=INTEGER},
+      </if>
+      <if test="forumTime != null" >
+        #{forumTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="forumImg != null" >
+        #{forumImg,jdbcType=VARCHAR},
+      </if>
+      <if test="forumContent != null" >
+        #{forumContent,jdbcType=VARCHAR},
+      </if>
+      <if test="forumPageviews != null" >
+        #{forumPageviews,jdbcType=INTEGER},
+      </if>
+      <if test="forumCommentvolume != null" >
+        #{forumCommentvolume,jdbcType=INTEGER},
+      </if>
+      <if test="forumType != null" >
+        #{forumType,jdbcType=VARCHAR},
+      </if>
+      <if test="forumDescr != null" >
+        #{forumDescr,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.jd.pojo.ForumExample" resultType="java.lang.Integer" >
+    select count(*) from forum
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update forum
+    <set >
+      <if test="record.forumId != null" >
+        forum_id = #{record.forumId,jdbcType=INTEGER},
+      </if>
+      <if test="record.usersId != null" >
+        users_id = #{record.usersId,jdbcType=INTEGER},
+      </if>
+      <if test="record.forumTime != null" >
+        forum_time = #{record.forumTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.forumImg != null" >
+        forum_img = #{record.forumImg,jdbcType=VARCHAR},
+      </if>
+      <if test="record.forumContent != null" >
+        forum_content = #{record.forumContent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.forumPageviews != null" >
+        forum_pageviews = #{record.forumPageviews,jdbcType=INTEGER},
+      </if>
+      <if test="record.forumCommentvolume != null" >
+        forum_commentvolume = #{record.forumCommentvolume,jdbcType=INTEGER},
+      </if>
+      <if test="record.forumType != null" >
+        forum_type = #{record.forumType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.forumDescr != null" >
+        forum_descr = #{record.forumDescr,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update forum
+    set forum_id = #{record.forumId,jdbcType=INTEGER},
+      users_id = #{record.usersId,jdbcType=INTEGER},
+      forum_time = #{record.forumTime,jdbcType=TIMESTAMP},
+      forum_img = #{record.forumImg,jdbcType=VARCHAR},
+      forum_content = #{record.forumContent,jdbcType=VARCHAR},
+      forum_pageviews = #{record.forumPageviews,jdbcType=INTEGER},
+      forum_commentvolume = #{record.forumCommentvolume,jdbcType=INTEGER},
+      forum_type = #{record.forumType,jdbcType=VARCHAR},
+      forum_descr = #{record.forumDescr,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jd.pojo.Forum" >
+    update forum
+    <set >
+      <if test="usersId != null" >
+        users_id = #{usersId,jdbcType=INTEGER},
+      </if>
+      <if test="forumTime != null" >
+        forum_time = #{forumTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="forumImg != null" >
+        forum_img = #{forumImg,jdbcType=VARCHAR},
+      </if>
+      <if test="forumContent != null" >
+        forum_content = #{forumContent,jdbcType=VARCHAR},
+      </if>
+      <if test="forumPageviews != null" >
+        forum_pageviews = #{forumPageviews,jdbcType=INTEGER},
+      </if>
+      <if test="forumCommentvolume != null" >
+        forum_commentvolume = #{forumCommentvolume,jdbcType=INTEGER},
+      </if>
+      <if test="forumType != null" >
+        forum_type = #{forumType,jdbcType=VARCHAR},
+      </if>
+      <if test="forumDescr != null" >
+        forum_descr = #{forumDescr,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where forum_id = #{forumId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jd.pojo.Forum" >
+    update forum
+    set users_id = #{usersId,jdbcType=INTEGER},
+      forum_time = #{forumTime,jdbcType=TIMESTAMP},
+      forum_img = #{forumImg,jdbcType=VARCHAR},
+      forum_content = #{forumContent,jdbcType=VARCHAR},
+      forum_pageviews = #{forumPageviews,jdbcType=INTEGER},
+      forum_commentvolume = #{forumCommentvolume,jdbcType=INTEGER},
+      forum_type = #{forumType,jdbcType=VARCHAR},
+      forum_descr = #{forumDescr,jdbcType=VARCHAR}
+    where forum_id = #{forumId,jdbcType=INTEGER}
+  </update>
+</mapper>

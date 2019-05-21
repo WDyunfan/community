@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jd.dao.AticleMapper" >
+  <resultMap id="BaseResultMap" type="com.jd.pojo.Aticle" >
+    <id column="aticle_id" property="aticleId" jdbcType="INTEGER" />
+    <result column="users_id" property="usersId" jdbcType="INTEGER" />
+    <result column="aticle_title" property="aticleTitle" jdbcType="VARCHAR" />
+    <result column="aticle_content" property="aticleContent" jdbcType="VARCHAR" />
+    <result column="aticle_time" property="aticleTime" jdbcType="TIMESTAMP" />
+    <result column="aticle_pageviews" property="aticlePageviews" jdbcType="INTEGER" />
+    <result column="aticle_like" property="aticleLike" jdbcType="INTEGER" />
+    <result column="aticle_commentvolume" property="aticleCommentvolume" jdbcType="INTEGER" />
+    <result column="aticle_type" property="aticleType" jdbcType="VARCHAR" />
+    <result column="aticle_descr" property="aticleDescr" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    aticle_id, users_id, aticle_title, aticle_content, aticle_time, aticle_pageviews, 
+    aticle_like, aticle_commentvolume, aticle_type, aticle_descr
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.jd.pojo.AticleExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from aticle
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from aticle
+    where aticle_id = #{aticleId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from aticle
+    where aticle_id = #{aticleId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.jd.pojo.AticleExample" >
+    delete from aticle
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.jd.pojo.Aticle" >
+    insert into aticle (aticle_id, users_id, aticle_title, 
+      aticle_content, aticle_time, aticle_pageviews, 
+      aticle_like, aticle_commentvolume, aticle_type, 
+      aticle_descr)
+    values (#{aticleId,jdbcType=INTEGER}, #{usersId,jdbcType=INTEGER}, #{aticleTitle,jdbcType=VARCHAR}, 
+      #{aticleContent,jdbcType=VARCHAR}, #{aticleTime,jdbcType=TIMESTAMP}, #{aticlePageviews,jdbcType=INTEGER}, 
+      #{aticleLike,jdbcType=INTEGER}, #{aticleCommentvolume,jdbcType=INTEGER}, #{aticleType,jdbcType=VARCHAR}, 
+      #{aticleDescr,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jd.pojo.Aticle" >
+    insert into aticle
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="aticleId != null" >
+        aticle_id,
+      </if>
+      <if test="usersId != null" >
+        users_id,
+      </if>
+      <if test="aticleTitle != null" >
+        aticle_title,
+      </if>
+      <if test="aticleContent != null" >
+        aticle_content,
+      </if>
+      <if test="aticleTime != null" >
+        aticle_time,
+      </if>
+      <if test="aticlePageviews != null" >
+        aticle_pageviews,
+      </if>
+      <if test="aticleLike != null" >
+        aticle_like,
+      </if>
+      <if test="aticleCommentvolume != null" >
+        aticle_commentvolume,
+      </if>
+      <if test="aticleType != null" >
+        aticle_type,
+      </if>
+      <if test="aticleDescr != null" >
+        aticle_descr,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="aticleId != null" >
+        #{aticleId,jdbcType=INTEGER},
+      </if>
+      <if test="usersId != null" >
+        #{usersId,jdbcType=INTEGER},
+      </if>
+      <if test="aticleTitle != null" >
+        #{aticleTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="aticleContent != null" >
+        #{aticleContent,jdbcType=VARCHAR},
+      </if>
+      <if test="aticleTime != null" >
+        #{aticleTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="aticlePageviews != null" >
+        #{aticlePageviews,jdbcType=INTEGER},
+      </if>
+      <if test="aticleLike != null" >
+        #{aticleLike,jdbcType=INTEGER},
+      </if>
+      <if test="aticleCommentvolume != null" >
+        #{aticleCommentvolume,jdbcType=INTEGER},
+      </if>
+      <if test="aticleType != null" >
+        #{aticleType,jdbcType=VARCHAR},
+      </if>
+      <if test="aticleDescr != null" >
+        #{aticleDescr,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.jd.pojo.AticleExample" resultType="java.lang.Integer" >
+    select count(*) from aticle
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update aticle
+    <set >
+      <if test="record.aticleId != null" >
+        aticle_id = #{record.aticleId,jdbcType=INTEGER},
+      </if>
+      <if test="record.usersId != null" >
+        users_id = #{record.usersId,jdbcType=INTEGER},
+      </if>
+      <if test="record.aticleTitle != null" >
+        aticle_title = #{record.aticleTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.aticleContent != null" >
+        aticle_content = #{record.aticleContent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.aticleTime != null" >
+        aticle_time = #{record.aticleTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.aticlePageviews != null" >
+        aticle_pageviews = #{record.aticlePageviews,jdbcType=INTEGER},
+      </if>
+      <if test="record.aticleLike != null" >
+        aticle_like = #{record.aticleLike,jdbcType=INTEGER},
+      </if>
+      <if test="record.aticleCommentvolume != null" >
+        aticle_commentvolume = #{record.aticleCommentvolume,jdbcType=INTEGER},
+      </if>
+      <if test="record.aticleType != null" >
+        aticle_type = #{record.aticleType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.aticleDescr != null" >
+        aticle_descr = #{record.aticleDescr,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update aticle
+    set aticle_id = #{record.aticleId,jdbcType=INTEGER},
+      users_id = #{record.usersId,jdbcType=INTEGER},
+      aticle_title = #{record.aticleTitle,jdbcType=VARCHAR},
+      aticle_content = #{record.aticleContent,jdbcType=VARCHAR},
+      aticle_time = #{record.aticleTime,jdbcType=TIMESTAMP},
+      aticle_pageviews = #{record.aticlePageviews,jdbcType=INTEGER},
+      aticle_like = #{record.aticleLike,jdbcType=INTEGER},
+      aticle_commentvolume = #{record.aticleCommentvolume,jdbcType=INTEGER},
+      aticle_type = #{record.aticleType,jdbcType=VARCHAR},
+      aticle_descr = #{record.aticleDescr,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jd.pojo.Aticle" >
+    update aticle
+    <set >
+      <if test="usersId != null" >
+        users_id = #{usersId,jdbcType=INTEGER},
+      </if>
+      <if test="aticleTitle != null" >
+        aticle_title = #{aticleTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="aticleContent != null" >
+        aticle_content = #{aticleContent,jdbcType=VARCHAR},
+      </if>
+      <if test="aticleTime != null" >
+        aticle_time = #{aticleTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="aticlePageviews != null" >
+        aticle_pageviews = #{aticlePageviews,jdbcType=INTEGER},
+      </if>
+      <if test="aticleLike != null" >
+        aticle_like = #{aticleLike,jdbcType=INTEGER},
+      </if>
+      <if test="aticleCommentvolume != null" >
+        aticle_commentvolume = #{aticleCommentvolume,jdbcType=INTEGER},
+      </if>
+      <if test="aticleType != null" >
+        aticle_type = #{aticleType,jdbcType=VARCHAR},
+      </if>
+      <if test="aticleDescr != null" >
+        aticle_descr = #{aticleDescr,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where aticle_id = #{aticleId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jd.pojo.Aticle" >
+    update aticle
+    set users_id = #{usersId,jdbcType=INTEGER},
+      aticle_title = #{aticleTitle,jdbcType=VARCHAR},
+      aticle_content = #{aticleContent,jdbcType=VARCHAR},
+      aticle_time = #{aticleTime,jdbcType=TIMESTAMP},
+      aticle_pageviews = #{aticlePageviews,jdbcType=INTEGER},
+      aticle_like = #{aticleLike,jdbcType=INTEGER},
+      aticle_commentvolume = #{aticleCommentvolume,jdbcType=INTEGER},
+      aticle_type = #{aticleType,jdbcType=VARCHAR},
+      aticle_descr = #{aticleDescr,jdbcType=VARCHAR}
+    where aticle_id = #{aticleId,jdbcType=INTEGER}
+  </update>
+</mapper>

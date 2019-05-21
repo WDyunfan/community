@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jd.dao.ForumresponseMapper" >
+  <resultMap id="BaseResultMap" type="com.jd.pojo.Forumresponse" >
+    <id column="forumresponse_id" property="forumresponseId" jdbcType="INTEGER" />
+    <result column="forum_id" property="forumId" jdbcType="INTEGER" />
+    <result column="forumresponse_img" property="forumresponseImg" jdbcType="VARCHAR" />
+    <result column="forumresponse_content" property="forumresponseContent" jdbcType="VARCHAR" />
+    <result column="forumresponse_like" property="forumresponseLike" jdbcType="INTEGER" />
+    <result column="forumresponse_time" property="forumresponseTime" jdbcType="TIMESTAMP" />
+    <result column="forumresponse_descr" property="forumresponseDescr" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    forumresponse_id, forum_id, forumresponse_img, forumresponse_content, forumresponse_like, 
+    forumresponse_time, forumresponse_descr
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.jd.pojo.ForumresponseExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from forumresponse
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  
+  <select id="selectByForumId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+  	select 
+    <include refid="Base_Column_List" />
+    from forumresponse 
+    where forum_id = #{forumId,jdbcType=INTEGER} order by forumresponse_time desc limit 0,3
+  </select>
+  
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from forumresponse
+    where forumresponse_id = #{forumresponseId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from forumresponse
+    where forumresponse_id = #{forumresponseId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.jd.pojo.ForumresponseExample" >
+    delete from forumresponse
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.jd.pojo.Forumresponse" >
+    insert into forumresponse (forumresponse_id, forum_id, forumresponse_img, 
+      forumresponse_content, forumresponse_like, 
+      forumresponse_time, forumresponse_descr
+      )
+    values (#{forumresponseId,jdbcType=INTEGER}, #{forumId,jdbcType=INTEGER}, #{forumresponseImg,jdbcType=VARCHAR}, 
+      #{forumresponseContent,jdbcType=VARCHAR}, #{forumresponseLike,jdbcType=INTEGER}, 
+      #{forumresponseTime,jdbcType=TIMESTAMP}, #{forumresponseDescr,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.jd.pojo.Forumresponse" >
+    insert into forumresponse
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="forumresponseId != null" >
+        forumresponse_id,
+      </if>
+      <if test="forumId != null" >
+        forum_id,
+      </if>
+      <if test="forumresponseImg != null" >
+        forumresponse_img,
+      </if>
+      <if test="forumresponseContent != null" >
+        forumresponse_content,
+      </if>
+      <if test="forumresponseLike != null" >
+        forumresponse_like,
+      </if>
+      <if test="forumresponseTime != null" >
+        forumresponse_time,
+      </if>
+      <if test="forumresponseDescr != null" >
+        forumresponse_descr,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="forumresponseId != null" >
+        #{forumresponseId,jdbcType=INTEGER},
+      </if>
+      <if test="forumId != null" >
+        #{forumId,jdbcType=INTEGER},
+      </if>
+      <if test="forumresponseImg != null" >
+        #{forumresponseImg,jdbcType=VARCHAR},
+      </if>
+      <if test="forumresponseContent != null" >
+        #{forumresponseContent,jdbcType=VARCHAR},
+      </if>
+      <if test="forumresponseLike != null" >
+        #{forumresponseLike,jdbcType=INTEGER},
+      </if>
+      <if test="forumresponseTime != null" >
+        #{forumresponseTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="forumresponseDescr != null" >
+        #{forumresponseDescr,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.jd.pojo.ForumresponseExample" resultType="java.lang.Integer" >
+    select count(*) from forumresponse
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update forumresponse
+    <set >
+      <if test="record.forumresponseId != null" >
+        forumresponse_id = #{record.forumresponseId,jdbcType=INTEGER},
+      </if>
+      <if test="record.forumId != null" >
+        forum_id = #{record.forumId,jdbcType=INTEGER},
+      </if>
+      <if test="record.forumresponseImg != null" >
+        forumresponse_img = #{record.forumresponseImg,jdbcType=VARCHAR},
+      </if>
+      <if test="record.forumresponseContent != null" >
+        forumresponse_content = #{record.forumresponseContent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.forumresponseLike != null" >
+        forumresponse_like = #{record.forumresponseLike,jdbcType=INTEGER},
+      </if>
+      <if test="record.forumresponseTime != null" >
+        forumresponse_time = #{record.forumresponseTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.forumresponseDescr != null" >
+        forumresponse_descr = #{record.forumresponseDescr,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update forumresponse
+    set forumresponse_id = #{record.forumresponseId,jdbcType=INTEGER},
+      forum_id = #{record.forumId,jdbcType=INTEGER},
+      forumresponse_img = #{record.forumresponseImg,jdbcType=VARCHAR},
+      forumresponse_content = #{record.forumresponseContent,jdbcType=VARCHAR},
+      forumresponse_like = #{record.forumresponseLike,jdbcType=INTEGER},
+      forumresponse_time = #{record.forumresponseTime,jdbcType=TIMESTAMP},
+      forumresponse_descr = #{record.forumresponseDescr,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jd.pojo.Forumresponse" >
+    update forumresponse
+    <set >
+      <if test="forumId != null" >
+        forum_id = #{forumId,jdbcType=INTEGER},
+      </if>
+      <if test="forumresponseImg != null" >
+        forumresponse_img = #{forumresponseImg,jdbcType=VARCHAR},
+      </if>
+      <if test="forumresponseContent != null" >
+        forumresponse_content = #{forumresponseContent,jdbcType=VARCHAR},
+      </if>
+      <if test="forumresponseLike != null" >
+        forumresponse_like = #{forumresponseLike,jdbcType=INTEGER},
+      </if>
+      <if test="forumresponseTime != null" >
+        forumresponse_time = #{forumresponseTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="forumresponseDescr != null" >
+        forumresponse_descr = #{forumresponseDescr,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where forumresponse_id = #{forumresponseId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jd.pojo.Forumresponse" >
+    update forumresponse
+    set forum_id = #{forumId,jdbcType=INTEGER},
+      forumresponse_img = #{forumresponseImg,jdbcType=VARCHAR},
+      forumresponse_content = #{forumresponseContent,jdbcType=VARCHAR},
+      forumresponse_like = #{forumresponseLike,jdbcType=INTEGER},
+      forumresponse_time = #{forumresponseTime,jdbcType=TIMESTAMP},
+      forumresponse_descr = #{forumresponseDescr,jdbcType=VARCHAR}
+    where forumresponse_id = #{forumresponseId,jdbcType=INTEGER}
+  </update>
+</mapper>

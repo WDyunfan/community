@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jd.dao.AticlePictureMapper" >
+  <resultMap id="BaseResultMap" type="com.jd.pojo.AticlePicture" >
+    <id column="aticle_picture_id" property="aticlePictureId" jdbcType="INTEGER" />
+    <result column="aticle_id" property="aticleId" jdbcType="INTEGER" />
+    <result column="aticle_picture_path" property="aticlePicturePath" jdbcType="VARCHAR" />
+    <result column="aticle_picture_descr" property="aticlePictureDescr" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    aticle_picture_id, aticle_id, aticle_picture_path, aticle_picture_descr
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.jd.pojo.AticlePictureExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from aticle_picture
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from aticle_picture
+    where aticle_picture_id = #{aticlePictureId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from aticle_picture
+    where aticle_picture_id = #{aticlePictureId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.jd.pojo.AticlePictureExample" >
+    delete from aticle_picture
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.jd.pojo.AticlePicture" >
+    insert into aticle_picture (aticle_picture_id, aticle_id, aticle_picture_path, 
+      aticle_picture_descr)
+    values (#{aticlePictureId,jdbcType=INTEGER}, #{aticleId,jdbcType=INTEGER}, #{aticlePicturePath,jdbcType=VARCHAR}, 
+      #{aticlePictureDescr,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jd.pojo.AticlePicture" >
+    insert into aticle_picture
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="aticlePictureId != null" >
+        aticle_picture_id,
+      </if>
+      <if test="aticleId != null" >
+        aticle_id,
+      </if>
+      <if test="aticlePicturePath != null" >
+        aticle_picture_path,
+      </if>
+      <if test="aticlePictureDescr != null" >
+        aticle_picture_descr,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="aticlePictureId != null" >
+        #{aticlePictureId,jdbcType=INTEGER},
+      </if>
+      <if test="aticleId != null" >
+        #{aticleId,jdbcType=INTEGER},
+      </if>
+      <if test="aticlePicturePath != null" >
+        #{aticlePicturePath,jdbcType=VARCHAR},
+      </if>
+      <if test="aticlePictureDescr != null" >
+        #{aticlePictureDescr,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.jd.pojo.AticlePictureExample" resultType="java.lang.Integer" >
+    select count(*) from aticle_picture
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update aticle_picture
+    <set >
+      <if test="record.aticlePictureId != null" >
+        aticle_picture_id = #{record.aticlePictureId,jdbcType=INTEGER},
+      </if>
+      <if test="record.aticleId != null" >
+        aticle_id = #{record.aticleId,jdbcType=INTEGER},
+      </if>
+      <if test="record.aticlePicturePath != null" >
+        aticle_picture_path = #{record.aticlePicturePath,jdbcType=VARCHAR},
+      </if>
+      <if test="record.aticlePictureDescr != null" >
+        aticle_picture_descr = #{record.aticlePictureDescr,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update aticle_picture
+    set aticle_picture_id = #{record.aticlePictureId,jdbcType=INTEGER},
+      aticle_id = #{record.aticleId,jdbcType=INTEGER},
+      aticle_picture_path = #{record.aticlePicturePath,jdbcType=VARCHAR},
+      aticle_picture_descr = #{record.aticlePictureDescr,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jd.pojo.AticlePicture" >
+    update aticle_picture
+    <set >
+      <if test="aticleId != null" >
+        aticle_id = #{aticleId,jdbcType=INTEGER},
+      </if>
+      <if test="aticlePicturePath != null" >
+        aticle_picture_path = #{aticlePicturePath,jdbcType=VARCHAR},
+      </if>
+      <if test="aticlePictureDescr != null" >
+        aticle_picture_descr = #{aticlePictureDescr,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where aticle_picture_id = #{aticlePictureId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jd.pojo.AticlePicture" >
+    update aticle_picture
+    set aticle_id = #{aticleId,jdbcType=INTEGER},
+      aticle_picture_path = #{aticlePicturePath,jdbcType=VARCHAR},
+      aticle_picture_descr = #{aticlePictureDescr,jdbcType=VARCHAR}
+    where aticle_picture_id = #{aticlePictureId,jdbcType=INTEGER}
+  </update>
+</mapper>

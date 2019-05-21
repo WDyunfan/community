@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jd.dao.InstantMessageMapper" >
+  <resultMap id="BaseResultMap" type="com.jd.pojo.InstantMessage" >
+    <id column="instant_message_id" property="instantMessageId" jdbcType="INTEGER" />
+    <result column="users_id" property="usersId" jdbcType="INTEGER" />
+    <result column="instant_message_title" property="instantMessageTitle" jdbcType="VARCHAR" />
+    <result column="instant_message_content" property="instantMessageContent" jdbcType="VARCHAR" />
+    <result column="instant_message_time" property="instantMessageTime" jdbcType="TIMESTAMP" />
+    <result column="instant_message_pageviews" property="instantMessagePageviews" jdbcType="INTEGER" />
+    <result column="instant_message_like" property="instantMessageLike" jdbcType="INTEGER" />
+    <result column="intant_message_commentvolume" property="intantMessageCommentvolume" jdbcType="INTEGER" />
+    <result column="instant_message_type" property="instantMessageType" jdbcType="VARCHAR" />
+    <result column="instant_message_descr" property="instantMessageDescr" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    instant_message_id, users_id, instant_message_title, instant_message_content, instant_message_time, 
+    instant_message_pageviews, instant_message_like, intant_message_commentvolume, instant_message_type, 
+    instant_message_descr
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.jd.pojo.InstantMessageExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from instant_message
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from instant_message
+    where instant_message_id = #{instantMessageId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from instant_message
+    where instant_message_id = #{instantMessageId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.jd.pojo.InstantMessageExample" >
+    delete from instant_message
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.jd.pojo.InstantMessage" >
+    insert into instant_message (instant_message_id, users_id, instant_message_title, 
+      instant_message_content, instant_message_time, 
+      instant_message_pageviews, instant_message_like, 
+      intant_message_commentvolume, instant_message_type, 
+      instant_message_descr)
+    values (#{instantMessageId,jdbcType=INTEGER}, #{usersId,jdbcType=INTEGER}, #{instantMessageTitle,jdbcType=VARCHAR}, 
+      #{instantMessageContent,jdbcType=VARCHAR}, #{instantMessageTime,jdbcType=TIMESTAMP}, 
+      #{instantMessagePageviews,jdbcType=INTEGER}, #{instantMessageLike,jdbcType=INTEGER}, 
+      #{intantMessageCommentvolume,jdbcType=INTEGER}, #{instantMessageType,jdbcType=VARCHAR}, 
+      #{instantMessageDescr,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jd.pojo.InstantMessage" >
+    insert into instant_message
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="instantMessageId != null" >
+        instant_message_id,
+      </if>
+      <if test="usersId != null" >
+        users_id,
+      </if>
+      <if test="instantMessageTitle != null" >
+        instant_message_title,
+      </if>
+      <if test="instantMessageContent != null" >
+        instant_message_content,
+      </if>
+      <if test="instantMessageTime != null" >
+        instant_message_time,
+      </if>
+      <if test="instantMessagePageviews != null" >
+        instant_message_pageviews,
+      </if>
+      <if test="instantMessageLike != null" >
+        instant_message_like,
+      </if>
+      <if test="intantMessageCommentvolume != null" >
+        intant_message_commentvolume,
+      </if>
+      <if test="instantMessageType != null" >
+        instant_message_type,
+      </if>
+      <if test="instantMessageDescr != null" >
+        instant_message_descr,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="instantMessageId != null" >
+        #{instantMessageId,jdbcType=INTEGER},
+      </if>
+      <if test="usersId != null" >
+        #{usersId,jdbcType=INTEGER},
+      </if>
+      <if test="instantMessageTitle != null" >
+        #{instantMessageTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="instantMessageContent != null" >
+        #{instantMessageContent,jdbcType=VARCHAR},
+      </if>
+      <if test="instantMessageTime != null" >
+        #{instantMessageTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="instantMessagePageviews != null" >
+        #{instantMessagePageviews,jdbcType=INTEGER},
+      </if>
+      <if test="instantMessageLike != null" >
+        #{instantMessageLike,jdbcType=INTEGER},
+      </if>
+      <if test="intantMessageCommentvolume != null" >
+        #{intantMessageCommentvolume,jdbcType=INTEGER},
+      </if>
+      <if test="instantMessageType != null" >
+        #{instantMessageType,jdbcType=VARCHAR},
+      </if>
+      <if test="instantMessageDescr != null" >
+        #{instantMessageDescr,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.jd.pojo.InstantMessageExample" resultType="java.lang.Integer" >
+    select count(*) from instant_message
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update instant_message
+    <set >
+      <if test="record.instantMessageId != null" >
+        instant_message_id = #{record.instantMessageId,jdbcType=INTEGER},
+      </if>
+      <if test="record.usersId != null" >
+        users_id = #{record.usersId,jdbcType=INTEGER},
+      </if>
+      <if test="record.instantMessageTitle != null" >
+        instant_message_title = #{record.instantMessageTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.instantMessageContent != null" >
+        instant_message_content = #{record.instantMessageContent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.instantMessageTime != null" >
+        instant_message_time = #{record.instantMessageTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.instantMessagePageviews != null" >
+        instant_message_pageviews = #{record.instantMessagePageviews,jdbcType=INTEGER},
+      </if>
+      <if test="record.instantMessageLike != null" >
+        instant_message_like = #{record.instantMessageLike,jdbcType=INTEGER},
+      </if>
+      <if test="record.intantMessageCommentvolume != null" >
+        intant_message_commentvolume = #{record.intantMessageCommentvolume,jdbcType=INTEGER},
+      </if>
+      <if test="record.instantMessageType != null" >
+        instant_message_type = #{record.instantMessageType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.instantMessageDescr != null" >
+        instant_message_descr = #{record.instantMessageDescr,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update instant_message
+    set instant_message_id = #{record.instantMessageId,jdbcType=INTEGER},
+      users_id = #{record.usersId,jdbcType=INTEGER},
+      instant_message_title = #{record.instantMessageTitle,jdbcType=VARCHAR},
+      instant_message_content = #{record.instantMessageContent,jdbcType=VARCHAR},
+      instant_message_time = #{record.instantMessageTime,jdbcType=TIMESTAMP},
+      instant_message_pageviews = #{record.instantMessagePageviews,jdbcType=INTEGER},
+      instant_message_like = #{record.instantMessageLike,jdbcType=INTEGER},
+      intant_message_commentvolume = #{record.intantMessageCommentvolume,jdbcType=INTEGER},
+      instant_message_type = #{record.instantMessageType,jdbcType=VARCHAR},
+      instant_message_descr = #{record.instantMessageDescr,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jd.pojo.InstantMessage" >
+    update instant_message
+    <set >
+      <if test="usersId != null" >
+        users_id = #{usersId,jdbcType=INTEGER},
+      </if>
+      <if test="instantMessageTitle != null" >
+        instant_message_title = #{instantMessageTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="instantMessageContent != null" >
+        instant_message_content = #{instantMessageContent,jdbcType=VARCHAR},
+      </if>
+      <if test="instantMessageTime != null" >
+        instant_message_time = #{instantMessageTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="instantMessagePageviews != null" >
+        instant_message_pageviews = #{instantMessagePageviews,jdbcType=INTEGER},
+      </if>
+      <if test="instantMessageLike != null" >
+        instant_message_like = #{instantMessageLike,jdbcType=INTEGER},
+      </if>
+      <if test="intantMessageCommentvolume != null" >
+        intant_message_commentvolume = #{intantMessageCommentvolume,jdbcType=INTEGER},
+      </if>
+      <if test="instantMessageType != null" >
+        instant_message_type = #{instantMessageType,jdbcType=VARCHAR},
+      </if>
+      <if test="instantMessageDescr != null" >
+        instant_message_descr = #{instantMessageDescr,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where instant_message_id = #{instantMessageId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jd.pojo.InstantMessage" >
+    update instant_message
+    set users_id = #{usersId,jdbcType=INTEGER},
+      instant_message_title = #{instantMessageTitle,jdbcType=VARCHAR},
+      instant_message_content = #{instantMessageContent,jdbcType=VARCHAR},
+      instant_message_time = #{instantMessageTime,jdbcType=TIMESTAMP},
+      instant_message_pageviews = #{instantMessagePageviews,jdbcType=INTEGER},
+      instant_message_like = #{instantMessageLike,jdbcType=INTEGER},
+      intant_message_commentvolume = #{intantMessageCommentvolume,jdbcType=INTEGER},
+      instant_message_type = #{instantMessageType,jdbcType=VARCHAR},
+      instant_message_descr = #{instantMessageDescr,jdbcType=VARCHAR}
+    where instant_message_id = #{instantMessageId,jdbcType=INTEGER}
+  </update>
+</mapper>

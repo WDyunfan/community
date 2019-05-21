@@ -1,0 +1,14 @@
+com\jd\dao\InstantPictureMapper.class
+com\jd\dao\ForumresponseMapper.class
+com\jd\dao\UserRoleMapper.class
+com\jd\dao\LeavemessageMapper.class
+com\jd\dao\InstantResponseMapper.class
+com\jd\dao\InstantMessageMapper.class
+com\jd\dao\RoleMapper.class
+com\jd\dao\AticleCommentMapper.class
+com\jd\dao\AticleMapper.class
+com\jd\dao\AticleResponseMapper.class
+com\jd\dao\ForumMapper.class
+com\jd\dao\AticlePictureMapper.class
+com\jd\dao\UsersMapper.class
+com\jd\dao\InstantCommentMapper.class

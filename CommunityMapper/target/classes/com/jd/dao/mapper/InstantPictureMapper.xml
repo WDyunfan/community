@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jd.dao.InstantPictureMapper" >
+  <resultMap id="BaseResultMap" type="com.jd.pojo.InstantPicture" >
+    <id column="instant_picture_id" property="instantPictureId" jdbcType="INTEGER" />
+    <result column="instant_message_id" property="instantMessageId" jdbcType="INTEGER" />
+    <result column="instant_picture_path" property="instantPicturePath" jdbcType="VARCHAR" />
+    <result column="instant_picture_descr" property="instantPictureDescr" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    instant_picture_id, instant_message_id, instant_picture_path, instant_picture_descr
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.jd.pojo.InstantPictureExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from instant_picture
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from instant_picture
+    where instant_picture_id = #{instantPictureId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from instant_picture
+    where instant_picture_id = #{instantPictureId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.jd.pojo.InstantPictureExample" >
+    delete from instant_picture
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.jd.pojo.InstantPicture" >
+    insert into instant_picture (instant_picture_id, instant_message_id, 
+      instant_picture_path, instant_picture_descr
+      )
+    values (#{instantPictureId,jdbcType=INTEGER}, #{instantMessageId,jdbcType=INTEGER}, 
+      #{instantPicturePath,jdbcType=VARCHAR}, #{instantPictureDescr,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.jd.pojo.InstantPicture" >
+    insert into instant_picture
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="instantPictureId != null" >
+        instant_picture_id,
+      </if>
+      <if test="instantMessageId != null" >
+        instant_message_id,
+      </if>
+      <if test="instantPicturePath != null" >
+        instant_picture_path,
+      </if>
+      <if test="instantPictureDescr != null" >
+        instant_picture_descr,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="instantPictureId != null" >
+        #{instantPictureId,jdbcType=INTEGER},
+      </if>
+      <if test="instantMessageId != null" >
+        #{instantMessageId,jdbcType=INTEGER},
+      </if>
+      <if test="instantPicturePath != null" >
+        #{instantPicturePath,jdbcType=VARCHAR},
+      </if>
+      <if test="instantPictureDescr != null" >
+        #{instantPictureDescr,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.jd.pojo.InstantPictureExample" resultType="java.lang.Integer" >
+    select count(*) from instant_picture
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update instant_picture
+    <set >
+      <if test="record.instantPictureId != null" >
+        instant_picture_id = #{record.instantPictureId,jdbcType=INTEGER},
+      </if>
+      <if test="record.instantMessageId != null" >
+        instant_message_id = #{record.instantMessageId,jdbcType=INTEGER},
+      </if>
+      <if test="record.instantPicturePath != null" >
+        instant_picture_path = #{record.instantPicturePath,jdbcType=VARCHAR},
+      </if>
+      <if test="record.instantPictureDescr != null" >
+        instant_picture_descr = #{record.instantPictureDescr,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update instant_picture
+    set instant_picture_id = #{record.instantPictureId,jdbcType=INTEGER},
+      instant_message_id = #{record.instantMessageId,jdbcType=INTEGER},
+      instant_picture_path = #{record.instantPicturePath,jdbcType=VARCHAR},
+      instant_picture_descr = #{record.instantPictureDescr,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jd.pojo.InstantPicture" >
+    update instant_picture
+    <set >
+      <if test="instantMessageId != null" >
+        instant_message_id = #{instantMessageId,jdbcType=INTEGER},
+      </if>
+      <if test="instantPicturePath != null" >
+        instant_picture_path = #{instantPicturePath,jdbcType=VARCHAR},
+      </if>
+      <if test="instantPictureDescr != null" >
+        instant_picture_descr = #{instantPictureDescr,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where instant_picture_id = #{instantPictureId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jd.pojo.InstantPicture" >
+    update instant_picture
+    set instant_message_id = #{instantMessageId,jdbcType=INTEGER},
+      instant_picture_path = #{instantPicturePath,jdbcType=VARCHAR},
+      instant_picture_descr = #{instantPictureDescr,jdbcType=VARCHAR}
+    where instant_picture_id = #{instantPictureId,jdbcType=INTEGER}
+  </update>
+</mapper>

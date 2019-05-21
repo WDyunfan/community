@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jd.dao.InstantCommentMapper" >
+  <resultMap id="BaseResultMap" type="com.jd.pojo.InstantComment" >
+    <id column="instant_comment_id" property="instantCommentId" jdbcType="INTEGER" />
+    <result column="instant_message_id" property="instantMessageId" jdbcType="INTEGER" />
+    <result column="instant_comment_img" property="instantCommentImg" jdbcType="VARCHAR" />
+    <result column="instant_comment_content" property="instantCommentContent" jdbcType="VARCHAR" />
+    <result column="instant_comment_like" property="instantCommentLike" jdbcType="INTEGER" />
+    <result column="instant_comment_type" property="instantCommentType" jdbcType="VARCHAR" />
+    <result column="instant_comment_time" property="instantCommentTime" jdbcType="TIMESTAMP" />
+    <result column="comment_descr" property="commentDescr" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    instant_comment_id, instant_message_id, instant_comment_img, instant_comment_content, 
+    instant_comment_like, instant_comment_type, instant_comment_time, comment_descr
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.jd.pojo.InstantCommentExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from instant_comment
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from instant_comment
+    where instant_comment_id = #{instantCommentId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from instant_comment
+    where instant_comment_id = #{instantCommentId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.jd.pojo.InstantCommentExample" >
+    delete from instant_comment
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.jd.pojo.InstantComment" >
+    insert into "instant_comment" (instant_comment_id, instant_message_id, 
+      instant_comment_img, instant_comment_content, 
+      instant_comment_like, instant_comment_type, 
+      instant_comment_time, comment_descr)
+    values (#{instantCommentId,jdbcType=INTEGER}, #{instantMessageId,jdbcType=INTEGER}, 
+      #{instantCommentImg,jdbcType=VARCHAR}, #{instantCommentContent,jdbcType=VARCHAR}, 
+      #{instantCommentLike,jdbcType=INTEGER}, #{instantCommentType,jdbcType=VARCHAR}, 
+      #{instantCommentTime,jdbcType=TIMESTAMP}, #{commentDescr,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jd.pojo.InstantComment" >
+    insert into instant_comment
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="instantCommentId != null" >
+        instant_comment_id,
+      </if>
+      <if test="instantMessageId != null" >
+        instant_message_id,
+      </if>
+      <if test="instantCommentImg != null" >
+        instant_comment_img,
+      </if>
+      <if test="instantCommentContent != null" >
+        instant_comment_content,
+      </if>
+      <if test="instantCommentLike != null" >
+        instant_comment_like,
+      </if>
+      <if test="instantCommentType != null" >
+        instant_comment_type,
+      </if>
+      <if test="instantCommentTime != null" >
+        instant_comment_time,
+      </if>
+      <if test="commentDescr != null" >
+        comment_descr,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="instantCommentId != null" >
+        #{instantCommentId,jdbcType=INTEGER},
+      </if>
+      <if test="instantMessageId != null" >
+        #{instantMessageId,jdbcType=INTEGER},
+      </if>
+      <if test="instantCommentImg != null" >
+        #{instantCommentImg,jdbcType=VARCHAR},
+      </if>
+      <if test="instantCommentContent != null" >
+        #{instantCommentContent,jdbcType=VARCHAR},
+      </if>
+      <if test="instantCommentLike != null" >
+        #{instantCommentLike,jdbcType=INTEGER},
+      </if>
+      <if test="instantCommentType != null" >
+        #{instantCommentType,jdbcType=VARCHAR},
+      </if>
+      <if test="instantCommentTime != null" >
+        #{instantCommentTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="commentDescr != null" >
+        #{commentDescr,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.jd.pojo.InstantCommentExample" resultType="java.lang.Integer" >
+    select count(*) from instant_comment
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update instant_comment
+    <set >
+      <if test="record.instantCommentId != null" >
+        instant_comment_id = #{record.instantCommentId,jdbcType=INTEGER},
+      </if>
+      <if test="record.instantMessageId != null" >
+        instant_message_id = #{record.instantMessageId,jdbcType=INTEGER},
+      </if>
+      <if test="record.instantCommentImg != null" >
+        instant_comment_img = #{record.instantCommentImg,jdbcType=VARCHAR},
+      </if>
+      <if test="record.instantCommentContent != null" >
+        instant_comment_content = #{record.instantCommentContent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.instantCommentLike != null" >
+        instant_comment_like = #{record.instantCommentLike,jdbcType=INTEGER},
+      </if>
+      <if test="record.instantCommentType != null" >
+        instant_comment_type = #{record.instantCommentType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.instantCommentTime != null" >
+        instant_comment_time = #{record.instantCommentTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.commentDescr != null" >
+        comment_descr = #{record.commentDescr,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update instant_comment
+    set instant_comment_id = #{record.instantCommentId,jdbcType=INTEGER},
+      instant_message_id = #{record.instantMessageId,jdbcType=INTEGER},
+      instant_comment_img = #{record.instantCommentImg,jdbcType=VARCHAR},
+      instant_comment_content = #{record.instantCommentContent,jdbcType=VARCHAR},
+      instant_comment_like = #{record.instantCommentLike,jdbcType=INTEGER},
+      instant_comment_type = #{record.instantCommentType,jdbcType=VARCHAR},
+      instant_comment_time = #{record.instantCommentTime,jdbcType=TIMESTAMP},
+      comment_descr = #{record.commentDescr,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jd.pojo.InstantComment" >
+    update instant_comment
+    <set >
+      <if test="instantMessageId != null" >
+        instant_message_id = #{instantMessageId,jdbcType=INTEGER},
+      </if>
+      <if test="instantCommentImg != null" >
+        instant_comment_img = #{instantCommentImg,jdbcType=VARCHAR},
+      </if>
+      <if test="instantCommentContent != null" >
+        instant_comment_content = #{instantCommentContent,jdbcType=VARCHAR},
+      </if>
+      <if test="instantCommentLike != null" >
+        instant_comment_like = #{instantCommentLike,jdbcType=INTEGER},
+      </if>
+      <if test="instantCommentType != null" >
+        instant_comment_type = #{instantCommentType,jdbcType=VARCHAR},
+      </if>
+      <if test="instantCommentTime != null" >
+        instant_comment_time = #{instantCommentTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="commentDescr != null" >
+        comment_descr = #{commentDescr,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where instant_comment_id = #{instantCommentId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jd.pojo.InstantComment" >
+    update instant_comment
+    set instant_message_id = #{instantMessageId,jdbcType=INTEGER},
+      instant_comment_img = #{instantCommentImg,jdbcType=VARCHAR},
+      instant_comment_content = #{instantCommentContent,jdbcType=VARCHAR},
+      instant_comment_like = #{instantCommentLike,jdbcType=INTEGER},
+      instant_comment_type = #{instantCommentType,jdbcType=VARCHAR},
+      instant_comment_time = #{instantCommentTime,jdbcType=TIMESTAMP},
+      comment_descr = #{commentDescr,jdbcType=VARCHAR}
+    where instant_comment_id = #{instantCommentId,jdbcType=INTEGER}
+  </update>
+</mapper>
